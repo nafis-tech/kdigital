@@ -7,6 +7,7 @@ import {
     Dropdown,
     Card
 } from 'react-bootstrap'
+import Axios from 'axios'
 
 import { PHOTO, IMG_5, IMG_1, IMG_17 } from '../assets'
 
@@ -15,9 +16,26 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            images: []
+            images: [],
+            data : []
 
         }
+    }
+    
+    getData = () => {
+        Axios.get(`https://hacker-news.firebaseio.com/v0/item/8863.json?print=pretty`)
+            .then(res => {
+                console.log(res.data) //ok
+                this.setState({ data : res.data})
+            })
+            .catch(err => {
+                console.log(err + 'Eror GET DATA')
+            })
+
+    }
+
+    componentDidMount() {
+        this.getData()
     }
 
     render() {
@@ -32,6 +50,9 @@ class Home extends React.Component {
                         </Card.Text>
                     </Card.Body>
                 </Card>
+                <div>
+
+                </div>
             </div>
         )
     }
